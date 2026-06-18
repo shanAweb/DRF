@@ -1,6 +1,6 @@
 import requests
 
-endpoint = "https://mockhttp.org"
+endpoint = "https://httpbin.org/anything"
 
-get_response = requests.get(endpoint)
+get_response = requests.get(endpoint, data = {"query" : "This is the endpoint"})
 print (get_response.text)
