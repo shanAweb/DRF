@@ -1,3 +1,4 @@
 .drfenv
 
 .env
+*.sqlite3
