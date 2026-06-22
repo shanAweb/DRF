@@ -48,6 +48,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Rest API - DRF',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,   # this removes the weird /api/schema/ entry
+    'SORT_OPERATIONS' : False
 }
 
 MIDDLEWARE = [
