@@ -17,3 +17,7 @@ def endpoint_view(request, *args, **kwargs):
         except json.JSONDecodeError:
             return Response({"message" : "Invalid JSON"}, status = 400)
     return Response(data)
+
+@api_view(['GET'])
+def get_status(*args, **kwargs):
+    return Response({"status" : "ok"}, status=200)
