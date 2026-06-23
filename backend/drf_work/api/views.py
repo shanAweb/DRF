@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiTypes
 from .models import Products
+from django.forms.models import model_to_dict
 
 data = {}
 @extend_schema(request=OpenApiTypes.OBJECT, responses=OpenApiTypes.OBJECT)
@@ -28,8 +29,5 @@ def get_data(*args, **kwargs):
     fetched_data={}
     model_data = Products.objects.all().order_by("?").first()
     if model_data:
-        fetched_data['id'] = model_data.id
-        fetched_data['name'] = model_data.name
-        fetched_data['price'] = model_data.price
-        fetched_data['description'] = model_data.description
+        fetched_data = model_to_dict(model_data, fields=['id', 'name', 'price', 'description'])
     return Response (fetched_data)
