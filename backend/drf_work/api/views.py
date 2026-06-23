@@ -3,6 +3,7 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiTypes
+from .models import Products
 
 data = {}
 @extend_schema(request=OpenApiTypes.OBJECT, responses=OpenApiTypes.OBJECT)
@@ -21,3 +22,14 @@ def endpoint_view(request, *args, **kwargs):
 @api_view(['GET'])
 def get_status(*args, **kwargs):
     return Response({"status" : "ok"}, status=200)
+
+@api_view(['GET'])
+def get_data(*args, **kwargs):
+    fetched_data={}
+    model_data = Products.objects.all().order_by("?").first()
+    if model_data:
+        fetched_data['id'] = model_data.id
+        fetched_data['name'] = model_data.name
+        fetched_data['price'] = model_data.price
+        fetched_data['description'] = model_data.description
+    return Response (fetched_data)
