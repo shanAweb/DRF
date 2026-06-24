@@ -25,8 +25,14 @@ def endpoint_view(request, *args, **kwargs):
 def get_status(*args, **kwargs):
     return Response({"status" : "ok"}, status=200)
 
-@api_view(['GET'])
-def get_data(*args, **kwargs):
+@extend_schema(request=apiSerializer, responses=apiSerializer)
+@api_view(['GET', 'POST'])
+def manage_data(request, *args, **kwargs):
+    if request.method == 'POST':
+        serializer = apiSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message':'Data stored successfully', 'data':serializer.data}, status=201)
     fetched_data={}
     model_data = Products.objects.all().order_by("?").first()
     if model_data:
