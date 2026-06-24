@@ -42,7 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'drf_spectacular'
+    'drf_spectacular',
+    'corsheaders'
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5500",     # e.g. VS Code Live Server
+    "http://127.0.0.1:5500",
 ]
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Rest API - DRF',
@@ -52,6 +57,8 @@ SPECTACULAR_SETTINGS = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',          # <-- add at/near the top
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management</title>
+</head>
+<body>
+    <div class="container">
+        <div class="post">
+            <h1>Add your product here</h1>
+            <label for="name">Enter Name</label>
+            <input type="text" id="name" name="name">
+            <label for="price">Enter price</label>
+            <input type="text" id="price" name="price">
+            <label for="description">Enter Description</label>
+            <input type="text" id="description" name="description">
+            <button class="post_button" onclick="postData()">Add Product</button>
+        </div>
+        <div class="get">
+            <button class="get_button" onclick="getData()">Get Data</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = "http://localhost:8000";   // swap this when your server URL changes
+
+        async function postData() {
+            const payload = {
+                name: document.getElementById("name").value,
+                price: document.getElementById("price").value,
+                description: document.getElementById("description").value
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/data`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                document.getElementById("result").textContent =
+                    res.ok ? "Stored: " + JSON.stringify(data) : "Error: " + JSON.stringify(data);
+            } catch (err) {
+                document.getElementById("result").textContent = "Request failed: " + err;
+            }
+        }
+
+        async function getData() {
+            try {
+                const res = await fetch(`${API_BASE}/data`);
+                const data = await res.json();
+                document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                document.getElementById("result").textContent = "Request failed: " + err;
+            }
+        }
+    </script>
+</body>
+</html>
