@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiTypes
 from .models import Products
 from django.forms.models import model_to_dict
+from .serializers import apiSerializer
 
 data = {}
 @extend_schema(request=OpenApiTypes.OBJECT, responses=OpenApiTypes.OBJECT)
@@ -29,5 +30,6 @@ def get_data(*args, **kwargs):
     fetched_data={}
     model_data = Products.objects.all().order_by("?").first()
     if model_data:
-        fetched_data = model_to_dict(model_data, fields=['id', 'name', 'price', 'description'])
+        # fetched_data = model_to_dict(model_data, fields=['id', 'name', 'price', 'description'])
+        fetched_data = apiSerializer(model_data).data
     return Response (fetched_data)
