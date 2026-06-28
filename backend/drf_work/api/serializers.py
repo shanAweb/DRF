@@ -7,5 +7,7 @@ class apiSerializer (serializers.ModelSerializer):
         fields = [
             'name',
             'price',
-            'description'
+            'description',
+            'sales_price',
+            'get_discount'
         ]
