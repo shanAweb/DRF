@@ -5,4 +5,5 @@ urlpatterns = [
     path('health', views.get_status),
     path('check', views.endpoint_view),
     path('data', views.manage_data),
+    path("<int:pk>", views.ProductDetailAPIView.as_view())
 ]

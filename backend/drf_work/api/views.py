@@ -6,6 +6,7 @@ from drf_spectacular.utils import extend_schema, OpenApiTypes
 from .models import Products
 from django.forms.models import model_to_dict
 from .serializers import apiSerializer
+from rest_framework import generics
 
 data = {}
 @extend_schema(request=OpenApiTypes.OBJECT, responses=OpenApiTypes.OBJECT)
@@ -39,3 +40,7 @@ def manage_data(request, *args, **kwargs):
         # fetched_data = model_to_dict(model_data, fields=['id', 'name', 'price', 'description'])
         fetched_data = apiSerializer(model_data).data
     return Response (fetched_data)
+
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    queryset = Products.objects.all()
+    serializer_class = apiSerializer
