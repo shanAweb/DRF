@@ -10,5 +10,3 @@ class Products(models.Model):
         return self.price
     def get_discount (self):
         return (10/100) * float (self.price)
-    
-
